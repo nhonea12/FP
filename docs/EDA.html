@@ -385,6 +385,8 @@ dbl (22): Diabetes_binary, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke,...
 </section>
 <section id="summarizations" class="level2">
 <h2 class="anchored" data-anchor-id="summarizations">Summarizations</h2>
+<section id="two-way-contingency-tables" class="level3">
+<h3 class="anchored" data-anchor-id="two-way-contingency-tables">Two-Way Contingency Tables</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two-way contingency table of whether someone has diabetes/prediabetes and whether they have high blood pressure</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diabetes_data<span class="sc">$</span>Diabetes_binary, diabetes_data<span class="sc">$</span>HighBP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -516,9 +518,64 @@ dbl (22): Diabetes_binary, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke,...
 </div>
 </div>
 <p>It generally appears that those with a higher household income are less likely to have diabetes or prediabetes, with over ten times as many non-diabetics in the uppermost income level compared to the lowermost, but only about three times as many diabetics/prediabetics.</p>
+</section>
+<section id="grouped-means-and-standard-deviations" class="level3">
+<h3 class="anchored" data-anchor-id="grouped-means-and-standard-deviations">Grouped Means and Standard Deviations</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># report the mean and standard deviation of the BMI's of those who reported having diabetes/prediabetes and those who didn't</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>diabetes_data <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diabetes_binary) <span class="sc">|&gt;</span> </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_BMI =</span> <span class="fu">mean</span>(BMI),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_BMI =</span> <span class="fu">sd</span>(BMI)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  Diabetes_binary      mean_BMI sd_BMI
+  &lt;fct&gt;                   &lt;dbl&gt;  &lt;dbl&gt;
+1 No Diabetes              27.8   6.29
+2 Prediabetes/Diabetes     31.9   7.36</code></pre>
+</div>
+</div>
+<p>It appears that individuals who have diabetes or prediabetes tend to have a larger BMI on average, with the mean BMI for diabetics/prediabetics being 4.1 units higher than for non-diabetics.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># report the mean and standard deviation of the BMI's of those who reported having diabetes/prediabetes and those who didn't</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>diabetes_data <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diabetes_binary) <span class="sc">|&gt;</span> </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_mental_health =</span> <span class="fu">mean</span>(MentHlth),</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_mental_health =</span> <span class="fu">sd</span>(MentHlth)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  Diabetes_binary      mean_mental_health sd_mental_health
+  &lt;fct&gt;                             &lt;dbl&gt;            &lt;dbl&gt;
+1 No Diabetes                        2.98             7.11
+2 Prediabetes/Diabetes               4.46             8.95</code></pre>
+</div>
+</div>
+<p>It appears that individuals who have diabetes or prediabetes tend to have had more poor mental health days in the last 30 days, with the mean number of recent poor mental health days for diabetics/prediabetics being 1.48 days higher than for non-diabetics.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># report the mean and standard deviation of the BMI's of those who reported having diabetes/prediabetes and those who didn't</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>diabetes_data <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diabetes_binary) <span class="sc">|&gt;</span> </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_physical_health =</span> <span class="fu">mean</span>(PhysHlth),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_physical_health =</span> <span class="fu">sd</span>(PhysHlth)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  Diabetes_binary      mean_physical_health sd_physical_health
+  &lt;fct&gt;                               &lt;dbl&gt;              &lt;dbl&gt;
+1 No Diabetes                          3.64               8.06
+2 Prediabetes/Diabetes                 7.95              11.3 </code></pre>
+</div>
+</div>
+<p>It appears that individuals who have diabetes or prediabetes tend to have had more poor physical health days in the last 30 days as well, with the mean number of recent poor physical health days for diabetics/prediabetics being 4.31 days higher than for non-diabetics.</p>
 <p><a href="Modeling.html">Click here for the Modeling Page</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

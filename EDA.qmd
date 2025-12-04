@@ -100,6 +100,8 @@ Our variables have been converted to factors with appropriate level names, and o
 
 ## Summarizations
 
+### Two-Way Contingency Tables
+
 ```{r}
 # two-way contingency table of whether someone has diabetes/prediabetes and whether they have high blood pressure
 table(diabetes_data$Diabetes_binary, diabetes_data$HighBP)
@@ -175,6 +177,47 @@ table(diabetes_data$Diabetes_binary, diabetes_data$Income)
 ```
 
 It generally appears that those with a higher household income are less likely to have diabetes or prediabetes, with over ten times as many non-diabetics in the uppermost income level compared to the lowermost, but only about three times as many diabetics/prediabetics.
+
+
+### Grouped Means and Standard Deviations
+
+```{r}
+# report the mean and standard deviation of the BMI's of those who reported having diabetes/prediabetes and those who didn't
+diabetes_data |> 
+  group_by(Diabetes_binary) |> 
+  summarize(
+    mean_BMI = mean(BMI),
+    sd_BMI = sd(BMI)
+  )
+```
+
+It appears that individuals who have diabetes or prediabetes tend to have a larger BMI on average, with the mean BMI for diabetics/prediabetics being 4.1 units higher than for non-diabetics.
+
+```{r}
+# report the mean and standard deviation of the BMI's of those who reported having diabetes/prediabetes and those who didn't
+diabetes_data |> 
+  group_by(Diabetes_binary) |> 
+  summarize(
+    mean_mental_health = mean(MentHlth),
+    sd_mental_health = sd(MentHlth)
+  )
+```
+
+It appears that individuals who have diabetes or prediabetes tend to have had more poor mental health days in the last 30 days, with the mean number of recent poor mental health days for diabetics/prediabetics being 1.48 days higher than for non-diabetics.
+
+```{r}
+# report the mean and standard deviation of the BMI's of those who reported having diabetes/prediabetes and those who didn't
+diabetes_data |> 
+  group_by(Diabetes_binary) |> 
+  summarize(
+    mean_physical_health = mean(PhysHlth),
+    sd_physical_health = sd(PhysHlth)
+  )
+```
+
+It appears that individuals who have diabetes or prediabetes tend to have had more poor physical health days in the last 30 days as well, with the mean number of recent poor physical health days for diabetics/prediabetics being 4.31 days higher than for non-diabetics.
+
+
 
 
 [Click here for the Modeling Page](Modeling.html)
