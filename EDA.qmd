@@ -217,7 +217,212 @@ diabetes_data |>
 
 It appears that individuals who have diabetes or prediabetes tend to have had more poor physical health days in the last 30 days as well, with the mean number of recent poor physical health days for diabetics/prediabetics being 4.31 days higher than for non-diabetics.
 
+### Visualizations
 
+```{r}
+# plot of mean BMI grouped by diabetes diagnosis
+diabetes_data |> 
+  group_by(Diabetes_binary) |> 
+  summarize(
+    mean_BMI = mean(BMI)
+  ) |> 
+  ggplot(aes(x = Diabetes_binary, y = mean_BMI)) + 
+  geom_col() + 
+  labs(
+    x = "Diabetes Category",
+    y = "Mean BMI",
+    title = "Mean BMI of those with and without \n diabetes/prediabetes"
+  )
+```
 
+The above plot is a visualization of how those with diabetes or prediabetes have a higher mean BMI those who do not have diabetes.
+
+```{r}
+# plot of mean BMI grouped by diabetes diagnosis
+diabetes_data |> 
+  group_by(Diabetes_binary) |> 
+  summarize(
+    mean_physical_health = mean(PhysHlth)
+  ) |> 
+  ggplot(aes(x = Diabetes_binary, y = mean_physical_health)) + 
+  geom_col() + 
+  labs(
+    x = "Diabetes Category",
+    y = "Mean Number of Poor Physical Health Days \n (Last 30 Days)",
+    title = "Mean number of poor physical health days for those \n with and without diabetes/prediabetes"
+  )
+```
+
+The above plot is a visualization of how those with diabetes or prediabetes have more poor physical healthy days than those who do not have diabetes.
+
+```{r}
+# plot of diabetes vs income level in terms of counts observations
+ggplot(data = diabetes_data, aes(x = Income, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    y = "Count",
+    title = "Diabetes diagnosis grouped by income level"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+This plot shows how a larger proportion of those in lower income brackets have diabetes or prediabetes.
+
+```{r}
+# plot of diabetes vs income level in terms of proportions
+ggplot(data = diabetes_data, aes(x = Income, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by income level"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+This plot shows the same thing as the one before, but shows the proportions instead of counts, making it more clear that those in lower income brackets are more likely to have diabetes or prediabetes.
+
+```{r}
+# plot of diabetes vs high blood pressure in terms of counts/observations
+ggplot(data = diabetes_data, aes(x = HighBP, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    x = "High Blood Pressure?",
+    y = "Count",
+    title = "Diabetes diagnosis grouped by whether individual \n has high blood pressure"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+
+# plot of diabetes vs high blood pressure in terms of proportions
+ggplot(data = diabetes_data, aes(x = HighBP, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    x = "High Blood Pressure?",
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by whether individual \n has high blood pressure"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+The above plots show how those with high blood pressure are more likely to have diabetes or prediabetes than those without high blood pressure. The first plot shows the counts and the second shows the proportions.
+
+```{r}
+# plot of diabetes vs high cholesterol in terms of counts/observations
+ggplot(data = diabetes_data, aes(x = HighChol, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    x = "High Cholesterol?",
+    y = "Count",
+    title = "Diabetes diagnosis grouped by whether individual \n has high cholesterol"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+
+# plot of diabetes vs high cholesterol in terms of proportions
+ggplot(data = diabetes_data, aes(x = HighChol, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    x = "High Cholesterol?",
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by whether individual \n has high cholesterol"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+The above plots show how those with high cholesterol are more likely to have diabetes or prediabetes than those without high cholesterol. The first plot shows the counts and the second shows the proportions.
+
+```{r}
+# plot of diabetes vs general health in terms of counts/observations
+ggplot(data = diabetes_data, aes(x = GenHlth, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    x = "General Health",
+    y = "Count",
+    title = "Diabetes diagnosis grouped by individuals' \n self-reported general health"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+
+# plot of diabetes vs general health in terms of proportions
+ggplot(data = diabetes_data, aes(x = GenHlth, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    x = "General Health",
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by individuals' \n self-reported general health"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+The above plots show how those who report worse general health are more likely to have diabetes or prediabetes than those who report better general health. The first plot shows the counts and the second shows the proportions.
+
+```{r}
+# plot of diabetes vs heart disease/attack in terms of counts/observations
+ggplot(data = diabetes_data, aes(x = HeartDiseaseorAttack, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    x = "Heart Disease/Attack?",
+    y = "Count",
+    title = "Diabetes diagnosis grouped by whether individual \n has had heart disease or a heart attack"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+
+# plot of diabetes vs heart disease/attack in terms of proportions
+ggplot(data = diabetes_data, aes(x = HeartDiseaseorAttack, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    x = "Heart Disease/Attack?",
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by whether individual \n has had heart disease or a heart attack"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+The above plots show how those who have had heart disease or a heart attack are more likely to have diabetes or prediabetes than those who have not. The first plot shows the counts and the second shows the proportions.
+
+```{r}
+# plot of diabetes vs smoker in terms of counts/observations
+ggplot(data = diabetes_data, aes(x = Smoker, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    x = "Smoker?",
+    y = "Count",
+    title = "Diabetes diagnosis grouped by whether individual \n is or was a smoker"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+
+# plot of diabetes vs smoker in terms of proportions
+ggplot(data = diabetes_data, aes(x = Smoker, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    x = "Smoker?",
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by whether individual \n is or was a smoker"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+The above plots show how those who are or were smokers are more slightly likely to have diabetes or prediabetes than those who have never been smokers. Being a smoker is defined as having at least 100 cigarettes in your life. The first plot shows the counts and the second shows the proportions. While the proportion is higher among smokers, the difference is less stark than some of the other indicator variables.
+
+```{r}
+# plot of diabetes vs veggies in terms of counts/observations
+ggplot(data = diabetes_data, aes(x = Veggies, fill = Diabetes_binary)) + 
+  geom_bar() + 
+  labs(
+    x = "Eats Vegetables?",
+    y = "Count",
+    title = "Diabetes diagnosis grouped by whether individual \n regularly eats vegetables"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+
+# plot of diabetes vs veggies in terms of proportions
+ggplot(data = diabetes_data, aes(x = Veggies, fill = Diabetes_binary)) + 
+  geom_bar(position = "fill") + 
+  labs(
+    x = "Eats Vegetables?",
+    y = "Proportion",
+    title = "Diabetes diagnosis grouped by whether individual \n regularly eats vegetables"
+  ) + 
+  scale_fill_discrete(name = "Diabetes Category:")
+```
+
+The above plots show how those who do not regularly eat vegetables are more likely to have diabetes or prediabetes than those who do. The first plot shows the counts and the second shows the proportions.
 
 [Click here for the Modeling Page](Modeling.html)
