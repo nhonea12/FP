@@ -5,7 +5,7 @@ library(tidymodels)
 #* @apiTitle Final Project API
 #* @apiDescription Three endpoints on diabetes data
 # read in data on diabetes
-diabetes_data <- read_csv("../diabetes_binary_health_indicators_BRFSS2015.csv")
+diabetes_data <- read_csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 
 # convert columns with binary variables to factors and change the names of values
 diabetes_data <- diabetes_data |> 
@@ -35,7 +35,7 @@ diabetes_data <- diabetes_data |>
 # change level names of factors
 levels(diabetes_data$Diabetes_binary) <- list("No Diabetes" = "0", "Prediabetes/Diabetes" = "1")
 
-levels(diabetes_data$HighBP) <- list("No High Blood Pressue" = "0", "High Blood Pressure" = "1")
+levels(diabetes_data$HighBP) <- list("No High Blood Pressure" = "0", "High Blood Pressure" = "1")
 
 levels(diabetes_data$HighChol) <- list("No High Cholesterol" = "0", "High Cholesterol" = "1")
 
@@ -72,8 +72,8 @@ levels(diabetes_data$Education) <- list("No school/kindergarten" = "1", "Element
 levels(diabetes_data$Income) <- list("< $10,000" = "1", "$10,000-$15,000" = "2", "$15,000-$20,000" = "3", "$20,000-$25,000" = "4", "$25,000-$35,000" = "5", "$35,000-$50,000" = "6", "$50,000-$75,000" = "7", "$75,000+" = "8")
 
 # read in our best overall model workflow
-workflow <- readRDS("../final_wkf.RDS")
-model <- readRDS("../final_model.RDS")
+workflow <- readRDS("final_wkf.RDS")
+model <- readRDS("final_model.RDS")
 
 
 # extract the final model

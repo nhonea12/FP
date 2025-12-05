@@ -276,7 +276,7 @@ dbl (22): Diabetes_binary, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke,...
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># change level names of factors</span></span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(diabetes_data<span class="sc">$</span>Diabetes_binary) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"No Diabetes"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"Prediabetes/Diabetes"</span> <span class="ot">=</span> <span class="st">"1"</span>)</span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(diabetes_data<span class="sc">$</span>HighBP) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"No High Blood Pressue"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"High Blood Pressure"</span> <span class="ot">=</span> <span class="st">"1"</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(diabetes_data<span class="sc">$</span>HighBP) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"No High Blood Pressure"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"High Blood Pressure"</span> <span class="ot">=</span> <span class="st">"1"</span>)</span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(diabetes_data<span class="sc">$</span>HighChol) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"No High Cholesterol"</span> <span class="ot">=</span> <span class="st">"0"</span>, <span class="st">"High Cholesterol"</span> <span class="ot">=</span> <span class="st">"1"</span>)</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
@@ -338,7 +338,7 @@ dbl (22): Diabetes_binary, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke,...
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [253,680 × 22] (S3: tbl_df/tbl/data.frame)
  $ Diabetes_binary     : Factor w/ 2 levels "No Diabetes",..: 1 1 1 1 1 1 1 1 2 1 ...
- $ HighBP              : Factor w/ 2 levels "No High Blood Pressue",..: 2 1 2 2 2 2 2 2 2 1 ...
+ $ HighBP              : Factor w/ 2 levels "No High Blood Pressure",..: 2 1 2 2 2 2 2 2 2 1 ...
  $ HighChol            : Factor w/ 2 levels "No High Cholesterol",..: 2 1 2 1 2 2 1 2 2 1 ...
  $ CholCheck           : Factor w/ 2 levels "No Chol. check in last 5 years",..: 2 1 2 2 2 2 2 2 2 2 ...
  $ BMI                 : num [1:253680] 40 25 28 27 24 25 30 25 30 24 ...
@@ -392,9 +392,9 @@ dbl (22): Diabetes_binary, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke,...
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diabetes_data<span class="sc">$</span>Diabetes_binary, diabetes_data<span class="sc">$</span>HighBP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      
-                       No High Blood Pressue High Blood Pressure
-  No Diabetes                         136109               82225
-  Prediabetes/Diabetes                  8742               26604</code></pre>
+                       No High Blood Pressure High Blood Pressure
+  No Diabetes                          136109               82225
+  Prediabetes/Diabetes                   8742               26604</code></pre>
 </div>
 </div>
 <p>It appears that those with high blood pressure are more likely to have diabetes or prediabetes than those who do not.</p>
