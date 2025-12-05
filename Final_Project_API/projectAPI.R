@@ -2,8 +2,10 @@ library(plumber)
 library(tidyverse)
 library(tidymodels)
 
+#* @apiTitle Final Project API
+#* @apiDescription Three endpoints on diabetes data
 # read in data on diabetes
-diabetes_data <- read_csv("diabetes_binary_health_indicators_BRFSS2015.csv")
+diabetes_data <- read_csv("../diabetes_binary_health_indicators_BRFSS2015.csv")
 
 # convert columns with binary variables to factors and change the names of values
 diabetes_data <- diabetes_data |> 
@@ -70,8 +72,8 @@ levels(diabetes_data$Education) <- list("No school/kindergarten" = "1", "Element
 levels(diabetes_data$Income) <- list("< $10,000" = "1", "$10,000-$15,000" = "2", "$15,000-$20,000" = "3", "$20,000-$25,000" = "4", "$25,000-$35,000" = "5", "$35,000-$50,000" = "6", "$50,000-$75,000" = "7", "$75,000+" = "8")
 
 # read in our best overall model workflow
-workflow <- readRDS("final_wkf.RDS")
-model <- readRDS("final_model.RDS")
+workflow <- readRDS("../final_wkf.RDS")
+model <- readRDS("../final_model.RDS")
 
 
 # extract the final model
@@ -88,60 +90,64 @@ preds_vs_outcome <- bind_cols(diabetes_data$Diabetes_binary, preds)
 names(preds_vs_outcome) <- c("outcomes", "predictions")
 
 
-
-
-preds_vs_outcome2 <- bind_cols(diabetes_data$Diabetes_binary, preds2)
-
-names(preds_vs_outcome2) <- c("outcomes", "predictions")
-
-cm2 <- preds_vs_outcome2 |> 
-  conf_mat(outcomes, predictions)
-
-autoplot(cm2, type = "heatmap")
-
 # save the mean BMI of the data set as an object
 mean_BMI <- mean(diabetes_data$BMI)
 
-#* @apiTitle Final Project API
-#* @apiDescription Three endpoints on diabetes data
-
-#* Echo back the input
-#* @param highBP 
-#* @param highChol
-#* @param veggies
-#* @param genHlth
-#* @param anyHlthcare
-#* @param BMI
+#* Predict Diabetes Based on Input Values
+#* @param highBP Levels: 'High Blood Pressure' and 'No High Blood Pressure'
+#* @param highChol Levels: 'High Cholesterol and 'No High Cholesterol'
+#* @param veggies Levels: 'Doesn't eat veggies' and 'Eats veggies' 
+#* @param genHlth Levels: 'Poor', 'Fair', 'Good', 'Very Good', and 'Excellent'
+#* @param diffWlk Levels: 'No difficulty walking' and 'Difficult walking'
+#* @param anyHlthcare Levels: 'No healthcare' and 'Healthcare'
+#* @param BMI Numeric variable
 #* @get /pred
 function(highBP = "No High Blood Pressure",
          highChol = "No High Cholesterol",
          veggies = "Eats veggies",
          genHlth = "Very Good",
+         diffWlk = "No difficulty walking",
          anyHlthcare = "Healthcare",
          BMI = mean_BMI
          ) {
-    list(msg = paste0("The message is: '", msg, "'"))
+    input_values <- tibble(
+      HighBP = factor(highBP, levels = levels(diabetes_data$HighBP)),
+      HighChol = factor(highChol, levels = levels(diabetes_data$HighChol)),
+      Veggies = factor(veggies, levels = levels(diabetes_data$Veggies)),
+      GenHlth = factor(genHlth, levels = levels(diabetes_data$GenHlth)),
+      DiffWalk = factor(diffWlk, levels = levels(diabetes_data$DiffWalk)),
+      AnyHealthcare = factor(anyHlthcare, levels = levels(diabetes_data$AnyHealthcare)),
+      BMI = as.numeric(BMI)
+        )
+    
+    predict(extract_model, new_data = input_values)
 }
 
+# Query one (default values): 
+# http://127.0.0.1:8000/pred?highBP=No%20High%20Blood%20Pressure&highChol=No%20High%20Cholesterol&veggies=Eats%20veggies&genHlth=Very%20Good&diffWlk=No%20difficulty%20walking&anyHlthcare=Healthcare&BMI=28.3824
 
-#* Plot a histogram
+# Query two:
+# http://127.0.0.1:8000/pred?highBP=High%20Blood%20Pressure&highChol=High%20Cholesterol&veggies=Eats%20veggies&genHlth=Poor&diffWlk=Difficulty%20walking&anyHlthcare=Healthcare&BMI=50
+
+# Query three:
+# http://127.0.0.1:8000/pred?highBP=High%20Blood%20Pressure&highChol=High%20Cholesterol&veggies=Doesn%27t%20eat%20veggies&genHlth=Good&diffWlk=Difficulty%20walking&anyHlthcare=No%20healthcare&BMI=38
+
+
+#* Provide Name and Github Pages url
 #* @get /info
-print("Name: Nathan Honea \n Github pages url: https://nhonea12.github.io/FinalProject/EDA.html")
+function(){
+list(Name = "Nathan Honea",
+Github_pages_url = "https://nhonea12.github.io/FinalProject/EDA.html")
+}
 
-#* Return the sum of two numbers
-#* @serializer /png
+#* Provide a Confusion Matrix of Predictions vs Outcomes
+#* @serializer png
 #* @get /confusion
+function(){
 # create the confusion matrix of predictions vs. outcomes
 cm <- preds_vs_outcome |> 
   conf_mat(outcomes, predictions)
 
 # plot the matrix
-autoplot(cm, type = "heatmap")
-
-# Programmatically alter your API
-#* @plumber
-function(pr) {
-    pr %>%
-        # Overwrite the default serializer to return unboxed JSON
-        pr_set_serializer(serializer_unboxed_json())
+print(autoplot(cm, type = "heatmap"))
 }
